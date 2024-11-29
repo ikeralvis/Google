@@ -1,6 +1,5 @@
 package es.deusto.sd.google.facade;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,17 +12,21 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import es.deusto.sd.google.service.UsuarioService;
+import es.deusto.sd.google.service.LoginService;
 import es.deusto.sd.google.dto.CredencialesDTO;
 import es.deusto.sd.google.entity.Credenciales;
 
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Control de los usuarios", description = "Funciones relacionadas con los usuarios: registro, login y logout")
-public class UsuarioController {
+public class LoginController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+		this.loginService = loginService;
+	}
+
 
     //FUNCION PARA HACER LOGIN
     @Operation(
@@ -39,23 +42,24 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(
-        @Parameter(name = "credentials", description = "User's credentials", required = true)    	
+        @Parameter(name = "credentials", description = "Credenciales del usuario", required = true)    	
     		@RequestBody CredencialesDTO credencialesDTO) {
 
         Credenciales credenciales = convertirDTOaCredenciales(credencialesDTO);
 
-        boolean validarEmail = usuarioService.validarEmail(credenciales.getEmail());
+        boolean validarEmail = loginService.validarEmail(credenciales.getEmail());
 
         if(validarEmail){
-            boolean validarLogin = usuarioService.validarLogin(credencialesDTO.getEmail(), credencialesDTO.getPassword());
+            boolean validarLogin = loginService.validarLogin(credencialesDTO.getEmail(), credencialesDTO.getPassword());
             if(validarLogin){
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Contraseña no valida", HttpStatus.UNAUTHORIZED);
             }
 
+        } else{
+            return new ResponseEntity<>("Email no valido", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("User not registered", HttpStatus.CONFLICT);
     }
 
     public Credenciales convertirDTOaCredenciales(CredencialesDTO credentialsDTO){

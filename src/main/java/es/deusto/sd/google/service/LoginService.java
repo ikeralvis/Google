@@ -8,7 +8,7 @@ import es.deusto.sd.google.entity.Credenciales;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class LoginService {
     @Autowired
     private CredencialesRepository credencialesRepository;
 
