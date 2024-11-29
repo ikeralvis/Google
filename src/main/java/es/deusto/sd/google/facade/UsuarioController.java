@@ -28,7 +28,7 @@ public class UsuarioController {
     //FUNCION PARA HACER LOGIN
     @Operation(
         summary = "Logearse en el sistema",
-        description = "Permite a un usuario iniciar sesión proporcionando correo electrónico y contraseña. Devuelve un token si es exitoso.",
+        description = "Permite a un usuario iniciar sesión proporcionando correo electrónico y contraseña.",
         responses = {
             @ApiResponse(responseCode = "200", description = "OK: Inicio de sesión exitoso, devuelve un token"),
             @ApiResponse(responseCode = "401", description = "No autorizado: Credenciales inválidas, inicio de sesión fallido"),
