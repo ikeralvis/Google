@@ -71,6 +71,7 @@ public class LoginController {
             @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
         }
     )
+    
     @PostMapping("/verificar-email")
     public ResponseEntity<String> verificarEmail(
         @Parameter(name = "email", description = "Email del usuario", required = true)
