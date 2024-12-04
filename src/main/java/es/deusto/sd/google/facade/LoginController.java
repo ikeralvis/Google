@@ -66,8 +66,7 @@ public class LoginController {
         summary = "Verificar el email del usuario",
         description = "Permite verificar si un email está registrado en el sistema.",
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK: El email está registrado"),
-            @ApiResponse(responseCode = "404", description = "No encontrado: El email no está registrado"),
+            @ApiResponse(responseCode = "200", description = "OK: La petición se ha completado con éxito"),
             @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
         }
     )
@@ -77,12 +76,12 @@ public class LoginController {
         @Parameter(name = "email", description = "Email del usuario", required = true)
         @RequestBody String email) {
 
-        boolean emailRegistrado = loginService.validarEmail(email);
+        boolean emailRegistrado = loginService.validarEmail(email.replace("\"", ""));
 
         if (emailRegistrado) {
-            return new ResponseEntity<>("El email está registrado", HttpStatus.OK);
+            return new ResponseEntity<>("TRUE", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("El email no está registrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("FALSE", HttpStatus.OK);
         }
     }
 
