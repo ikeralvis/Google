@@ -18,12 +18,14 @@ public class DatosMuestra {
             Credenciales serenaWilliams = new Credenciales("SerenaWilliams", "serena.williams@tennis.com");
             Credenciales lebronJames = new Credenciales("LeBronJames", "lebron.james@basketball.com");
             Credenciales prueba = new Credenciales("string", "string");
+            Credenciales prueba2 = new Credenciales("string2", "string2");
 
             
             credencialesRepository.save(usainBolt);
             credencialesRepository.save(serenaWilliams);
             credencialesRepository.save(lebronJames);
             credencialesRepository.save(prueba);
+            credencialesRepository.save(prueba2);
         };
     }
 

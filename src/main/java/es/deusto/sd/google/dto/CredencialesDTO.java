@@ -9,6 +9,11 @@ public class CredencialesDTO{
         this.password = password;
     }
 
+    public CredencialesDTO(){
+        this.email = "";
+        this.password = "";
+    }
+
     public String getEmail(){
         return email;
     }
